@@ -1,1 +1,1 @@
-transaccion = {'origen': 'wallet', 'operacion': 'registrartransaccion', 'dir1': ' 4faa039c2beac524e0f80f416d037c54d5e996ef293f44905e0ef57e95553270', 'dir2': 'c167b73616df9031a905266bebd3cc669374aa6d2f884905a11bf7389cc308fe', 'dinero': '34'}
+transaccion = {'origen': 'wallet', 'operacion': 'registrartransaccion', 'dir1': '', 'dir2': '', 'dinero': ''}

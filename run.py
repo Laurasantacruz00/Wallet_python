@@ -11,7 +11,7 @@ def hash_read(datos):
 
 @app.route("/wallet", methods=["GET", "POST"])#Ruta donde se hara la verificación de que la persona esta registrada
 def ingreso():#Funcion la cual verifica si el archivo txt se encuentra lleno   
-    if os.stat("proyecto.txt").st_size == 0:
+    if os.stat("wallet.txt").st_size == 0:
         print ("Vacio")
         return redirect(url_for('registro'))#Si este esta vacio se redirije a la pagina de registro
     else:
@@ -28,22 +28,10 @@ def registro():
         seed = str(palabras)+correo+str(hora_actual)#Informacion para generar el hash
         hash_origen = hash_read(seed)#Generando el hash
         seed = str(palabras)+correo+str(hora_actual)
-        #Creando un diccionario con la informacion del cliente 
-        wallet = {
-            "origen":"wallet", 
-            "operacion":"validar",
-            "palabras":str(palabras),
-            "email":str(correo),
-            "hora_actual":str(hora_actual),
-            "hash_origen":hash_origen
-        }
-        archivo = open("validacion.py","w")#Pasando diccionario a un archivo aparte 
-        archivo.write("wallet = {}" .format(wallet) )
-        archivo.close()
-        archivo = open("proyecto.txt","w")#Creando txt con la información del cliente
-        archivo.write("{}" .format(seed) )
+        archivo = open("wallet.txt","w")#Creando txt con la información del cliente
+        archivo.write("{}".format(seed) )
         archivo.close() 
-        wallet_1 = {}
+        wallet_1 = {} #Creando un diccionario con la informacion del cliente 
         wallet_1['datos'] = []
         wallet_1['datos'].append({
             "palabras":str(palabras),
@@ -53,21 +41,9 @@ def registro():
         })
         with open('wallet.json', 'w') as file:#Creando archivo json con la informacion del cliente
             json.dump(wallet_1, file, indent=4)
-        return redirect(url_for('validacion'))
-    return render_template("signup_form.html")
-
-@app.route("/wallet_1", methods=["GET","POST"])#Validando informacion con el coordinador
-def validacion():
-    r = requests.post('http://142.44.246.23:5596/coordinator',datos=jsonify({"wallet":wallet}))#Enviando json al coordinador
-    datos = request.get_json()#Recibiendo json de respuesta
-    respuesta = datos["respuesta"]#Respuesta del coordinador
-    print("La respuesta es "+respuesta)
-    if respuesta.upper() == "TRUE":
-        print("Datos correctos")#Si la respuesta es true el usuario ingresa y puede hacer transacciones
         return redirect(url_for('transaccion'))
-    else:
-        print("Datos incorrectos")#Si la respuesta es false el usuario debe volver a registrarse
-        return redirect(url_for('registro'))
+    return render_template("formulario.html")
+
         
 @app.route("/saldo",methods=["GET","POST"])
 def saldo():#Mostrando saldo al cliente
@@ -96,10 +72,10 @@ def transaccion():
     with open('wallet.json') as contenido: #Leyendo el json creado anteriormente para ver la informacion del cliente
         datos_wallet = json.load(contenido)
         for dato in datos_wallet['datos']:
-            verificacion = dato['hash_origen']
+            hash_origen = dato['hash_origen']
     if request.method == 'POST':
         #Trayendo datos del formulario
-        dir1 = verificacion 
+        dir1 = hash_origen 
         dir2 = request.form['dir2']
         dinero = request.form['dinero']
         #Creando diccionario con la informacion de la transaccion
@@ -114,8 +90,8 @@ def transaccion():
         archivo.write("transaccion = {}" .format(transaccion) )
         archivo.close() 
         return redirect(url_for('validacion_transaccion'))#Redireccionando a otra ruta
-    usuario = {'name':verificacion}#Trayendo hash del cliente
+    usuario = {'name':hash_origen}#Trayendo hash del cliente
     return render_template('inicio.html', usuario = usuario)
 
-if __name__ == '__main__':
-    app.run(host="142.44.246.66",debug=True,port=4000)#Puerto y host donde se vera la api 
+if __name__ == '__main__':#host="142.44.246.66",
+    app.run(debug=True,port=4000)#Puerto y host donde se vera la api 
