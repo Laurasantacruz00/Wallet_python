@@ -13,18 +13,7 @@ Con el objetivo de ejecutar los datos desde un server, realizar la conversión h
 A Partir de esta información se hace la creación de un archivo json y un txt
 Los cuales nos permitirán saber si el usuario se encuentra registrado en la plataforma, si el archivo txt está vacío entonces se procede a realizar el registro, si esta lleno el usuario ingresa a las transacciones.
 
-
-	wallet = {
-            "origen":"wallet",
-            "palabras":str(palabras),
-            "email":str(correo),
-            "hora_actual":str(hora_actual),
-            "hash_origen":hash_origen
-        }
-
-
-
-Para validar que los datos sean correctos se hace el envío de la información del cliente al coordinador el cual dependiendo de su respuesta "True" o "False" se le da un destino si sus datos son erróneos el registro no será efectuado.
+Para validar que los datos de la transaccion sean correctos se hace el envío de la información del cliente al coordinador el cual dependiendo de su respuesta "True" o "False" se le da un destino si sus datos son erróneos el registro no será efectuado.
 
 una vez confirmados los datos se ingresa al sector de transacciones. se pide la wallet interna del usuario, la dirección wallet del usuario 2 y un monto de dinero.
 esto se guarda en un archivo json donde se envía al coordinador la dirección uno más la Segunda dirección y el monto total
@@ -34,17 +23,18 @@ esto se guarda en un archivo json donde se envía al coordinador la dirección u
         dir2 = request.form['dir2']
         dinero = request.form['dinero']
         transaccion = {
-            "dir1":str(dir1),
-            "dir2":str(dir2),
-            "dinero":str(dinero)
+            "origen":"wallet",
+            "operacion":"registrartransaccion",
+            "dir1":dir1,
+            "dir2":dir2,
+            "dinero":dinero
         }
 
 La validación de estos datos será dada a partir de la respuesta del coordinador TRUE or FALSE esta misma será leída y será procesada para dar la respuesta al usuario por medio de un html.
 
 La wallet será ejecutada desde la dirección de host '142.44.246.66' por el puerto 4000, el envío y recepción de datos será realizado en las siguientes rutas:
 
-Validación de datos (registro y transacción) y Información del usuario (Saldo):
+Validación de datos (transacción) y Información del usuario (Saldo):
 
-	Registro:	http://142.44.246.66:4000/wallet_1
 	Transacción:   	http://142.44.246.66:4000/validacion	
 	Saldo:         	http://142.44.246.66:4000/saldo
