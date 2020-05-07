@@ -40,7 +40,7 @@ def registro():
         archivo = open("validacion.py","w")#Pasando diccionario a un archivo aparte 
         archivo.write("wallet = {}" .format(wallet) )
         archivo.close()
-        archivo = open("proyecto.txt","w")#Creando txt con la información del cliente
+        archivo = open("wallet.txt","w")#Creando txt con la información del cliente
         archivo.write("{}" .format(seed) )
         archivo.close() 
         wallet_1 = {}
