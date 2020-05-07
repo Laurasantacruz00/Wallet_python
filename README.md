@@ -43,9 +43,8 @@ La validación de estos datos será dada a partir de la respuesta del coordinado
 
 La wallet será ejecutada desde la dirección de host '142.44.246.66' por el puerto 4000, el envío y recepción de datos será realizado en las siguientes rutas:
 
-Validación de datos (registro y transacción):
+Validación de datos (registro y transacción) y Información del usuario (Saldo):
 
 	Registro:	http://142.44.246.66:4000/wallet_1
-	Transacción:   http://142.44.246.66:4000/validacion
-Información del usuario (Saldo):
-	Saldo:  http://142.44.246.66:4000/saldo
+	Transacción:   	http://142.44.246.66:4000/validacion	
+	Saldo:         	http://142.44.246.66:4000/saldo
