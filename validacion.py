@@ -1,1 +1,1 @@
-wallet = {'origen': 'wallet', 'operacion': 'validar', 'palabras': 'awewewwedw', 'email': 'wwedwdw', 'hora_actual': '20:23:49.330159', 'hash_origen': 'cf8b897bf867bc17380d68edbc89e97842d34c698512bdf0dc2f884f5d2ccc70'}
+wallet = {'origen': '', 'operacion': '', 'palabras': '', 'email': '', 'hora_actual': '', 'hash_origen': ''}
