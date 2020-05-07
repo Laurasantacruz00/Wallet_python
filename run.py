@@ -93,9 +93,13 @@ def validacion_transaccion():#Validando informacion con el coordinador
 
 @app.route("/transaccion", methods=["GET","POST"])#Realizando transaccion
 def transaccion():
+    with open('wallet.json') as contenido: #Leyendo el json creado anteriormente para ver la informacion del cliente
+        datos_wallet = json.load(contenido)
+        for dato in datos_wallet['datos']:
+            verificacion = dato['hash_origen']
     if request.method == 'POST':
         #Trayendo datos del formulario
-        dir1 = request.form['dir1'] 
+        dir1 = verificacion 
         dir2 = request.form['dir2']
         dinero = request.form['dinero']
         #Creando diccionario con la informacion de la transaccion
@@ -110,13 +114,8 @@ def transaccion():
         archivo.write("transaccion = {}" .format(transaccion) )
         archivo.close() 
         return redirect(url_for('validacion_transaccion'))#Redireccionando a otra ruta
-    with open('wallet.json') as contenido: #Leyendo el json creado anteriormente para ver la informacion del cliente
-        datos_wallet = json.load(contenido)
-        for dato in datos_wallet['datos']:
-            verificacion = dato['hash_origen']
-            print(verificacion)
     usuario = {'name':verificacion}#Trayendo hash del cliente
     return render_template('inicio.html', usuario = usuario)
 
 if __name__ == '__main__':
-    app.run(host='142.44.246.66',debug=True,port=4000)#Puerto y host donde se vera la api 
+    app.run(host="142.44.246.66",debug=True,port=4000)#Puerto y host donde se vera la api 
