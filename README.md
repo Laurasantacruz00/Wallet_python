@@ -5,7 +5,7 @@ La aplicacion se encuentra funcionando desde la URL:
 	Mockup de Api: http://142.44.246.66:4000/wallet
 	Api enlazada: http://142.44.246.66:5000/wallet
 	
-Para hacer pruebas con el mockup se recomienda el uso de Postman o insomnia en la cual se pude mandar una respuesta en formato json con el metodo post a los siguientes url de la siguiente forma:
+Para hacer pruebas con el mockup se recomienda el uso de Postman o insomnia en la cual se pude enviar una peticion en formato json con el metodo post a los siguientes url de la siguiente forma:
 	
 	Enviar saldo: http://142.44.246.66:4000/saldo
 		{
