@@ -46,25 +46,26 @@ def registro():
         
 @app.route("/saldo",methods=["GET","POST"])
 def saldo():#Mostrando saldo al cliente
-    r = requests.post('http://142.44.246.23:5596/coordinator',datos={"origen":"wallet","operacion":"consultarfondos"})#Pidiendo informacion al coordinador
-    datos = r.get_json() #Respuesta del coordinador
+    #r = requests.post('http://142.44.246.23:5596/coordinator',datos={"origen":"wallet","operacion":"consultarfondos"})#Pidiendo informacion al coordinador
+    datos = request.json #Respuesta del coordinador
     saldo = datos["saldo"]
     usuario = {'saldo':saldo}
     return render_template('Saldo.html', usuario = usuario)#Mostrando datos
 
 @app.route("/validacion",methods=["GET","POST"])
 def validacion_transaccion():#Validando informacion con el coordinador
-    r = requests.post('http://142.44.246.23:5596/coordinator',datos=jsonify({"wallet":transaccion}))#Pidiendo validacion al coordinador
-    datos = r.get_json() #Respuesta del coordinador
+    #r = requests.post('http://142.44.246.23:5596/coordinator',datos=jsonify({"wallet":transaccion}))#Pidiendo validacion al coordinador
+    datos = request.json #Respuesta de prueba coordinador
     respuesta = datos["respuesta"]
     if respuesta.upper()=="TRUE": #Si es true los datos son correctos la transaccion es exitosa
-        usuario = {'transaccion':"Existoso"}
+        usuario = {'transaccion':'Exitosa'}
         return render_template('inicio.html', usuario = usuario)
         return redirect(url_for('saldo'))#Redireccionando a otra ruta
     else:
-        usuario = {'transaccion':"Denegado"}#Si es false los datos son incorrectos la transaccion ha sido denegada
+        usuario = {'transaccion':'Denegada'}#Si es false los datos son incorrectos la transaccion ha sido denegada
         return render_template('inicio.html', usuario = usuario)
         return redirect(url_for('transaccion'))#Redireccionando a otra ruta
+    
 
 @app.route("/transaccion", methods=["GET","POST"])#Realizando transaccion
 def transaccion():
@@ -88,7 +89,7 @@ def transaccion():
         archivo = open("Transaccion.py","w")#Creando archivo aparte 
         archivo.write("transaccion = {}" .format(transaccion) )
         archivo.close() 
-        return redirect(url_for('validacion_transaccion'))#Redireccionando a otra ruta
+        return redirect(url_for('validacion_transaccion', hash_origen))#Redireccionando a otra ruta
     usuario = {'name':hash_origen}#Trayendo hash del cliente
     return render_template('inicio.html', usuario = usuario)
 
