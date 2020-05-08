@@ -1,6 +1,5 @@
 from flask import Flask,render_template, request, redirect, url_for,jsonify
 import hashlib,datetime,os,json, requests
-from validacion import wallet
 from Transaccion import transaccion
 
 #Creación de la aplicación 
@@ -28,25 +27,8 @@ def registro():
         seed = str(palabras)+correo+str(hora_actual)#Informacion para generar el hash
         hash_origen = hash_read(seed)#Generando el hash
         seed = str(palabras)+correo+str(hora_actual)
-<<<<<<< HEAD
         archivo = open("wallet.txt","w")#Creando txt con la información del cliente
         archivo.write("{}".format(seed) )
-=======
-        #Creando un diccionario con la informacion del cliente 
-        wallet = {
-            "origen":"wallet", 
-            "operacion":"validar",
-            "palabras":str(palabras),
-            "email":str(correo),
-            "hora_actual":str(hora_actual),
-            "hash_origen":hash_origen
-        }
-        archivo = open("validacion.py","w")#Pasando diccionario a un archivo aparte 
-        archivo.write("wallet = {}" .format(wallet) )
-        archivo.close()
-        archivo = open("wallet.txt","w")#Creando txt con la información del cliente
-        archivo.write("{}" .format(seed) )
->>>>>>> 94f2ecdb76cd8efa99e409857ee6301615310cf0
         archivo.close() 
         wallet_1 = {} #Creando un diccionario con la informacion del cliente 
         wallet_1['datos'] = []
@@ -110,10 +92,5 @@ def transaccion():
     usuario = {'name':hash_origen}#Trayendo hash del cliente
     return render_template('inicio.html', usuario = usuario)
 
-<<<<<<< HEAD
-if __name__ == '__main__':#host="142.44.246.66",
-    app.run(debug=True,port=4000)#Puerto y host donde se vera la api 
-=======
 if __name__ == '__main__':
     app.run(host="142.44.246.66",debug=True,port=4000)#Puerto y host donde se vera la api 
->>>>>>> 94f2ecdb76cd8efa99e409857ee6301615310cf0
