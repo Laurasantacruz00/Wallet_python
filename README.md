@@ -23,7 +23,7 @@ Esta api fue creada en python 3.6 usando los siguientes paquetes y librerías lo
 
 Estás, usadas con el objetivo de crear una aplicación web (Flask), generar un hash para el cliente (Hashlib), verificar la hora interna del equipo (datetime), librerías como "json" la cual nos permite generar un archivo del mismo tipo y requests que se encargará de hacer el envio y recepcion de datos a otras aplicaciones, así como "os" el cual nos permitirá verificar si el archivo txt (wallet.txt), está lleno o vacío para determinar si el cliente ya fue registrado previamente.
 
-Esta wallet fue creada con el objetivo realizar transacciones entre wallet's, para esto se genera un hash mediante el uso de 12 palabras, un correo registrado por el usuario y la hora de registro. Estos datos se guardaran en un diccionario.
+La aplicación fue creada con el objetivo realizar transacciones entre wallet's, para esto se genera un hash mediante el uso de 12 palabras, un correo registrado por el usuario y la hora de registro. Estos datos se guardaran en un diccionario.
 
 	wallet_1 = {} #Creando un diccionario con la informacion del cliente 
         wallet_1['datos'] = []
