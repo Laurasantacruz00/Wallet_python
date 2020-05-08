@@ -46,19 +46,17 @@ def registro():
         
 @app.route("/saldo",methods=["GET","POST"])
 def saldo():#Mostrando saldo al cliente
-    #r = requests.post('http://142.44.246.23:5596/coordinator',datos={"origen":"wallet","operacion":"consultarfondos"})#Pidiendo informacion al coordinador
-    #datos = r.get_json() #Respuesta del coordinador
-    #saldo = datos["saldo"]
-    saldo = 1200000 #Dato de prueba
+    r = requests.post('http://142.44.246.23:5596/coordinator',datos={"origen":"wallet","operacion":"consultarfondos"})#Pidiendo informacion al coordinador
+    datos = r.get_json() #Respuesta del coordinador
+    saldo = datos["saldo"]
     usuario = {'saldo':saldo}
     return render_template('Saldo.html', usuario = usuario)#Mostrando datos
 
 @app.route("/validacion",methods=["GET","POST"])
 def validacion_transaccion():#Validando informacion con el coordinador
-    #r = requests.post('http://142.44.246.23:5596/coordinator',datos=jsonify({"wallet":transaccion}))#Pidiendo validacion al coordinador
-    #datos = r.get_json() #Respuesta del coordinador
-    #respuesta = datos["respuesta"]
-    respuesta = "True" #Dato de prueba
+    r = requests.post('http://142.44.246.23:5596/coordinator',datos=jsonify({"wallet":transaccion}))#Pidiendo validacion al coordinador
+    datos = r.get_json() #Respuesta del coordinador
+    respuesta = datos["respuesta"]
     if respuesta.upper()=="TRUE": #Si es true los datos son correctos la transaccion es exitosa
         usuario = {'transaccion':"Existoso"}
         return render_template('inicio.html', usuario = usuario)
@@ -95,4 +93,4 @@ def transaccion():
     return render_template('inicio.html', usuario = usuario)
 
 if __name__ == '__main__':
-    app.run(host="142.44.246.66",debug=True,port=5000)#Puerto y host donde se vera la api 
+    app.run(host="142.44.246.66",debug=True,port=4000)#Puerto y host donde se vera la api 
