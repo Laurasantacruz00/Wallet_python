@@ -1,6 +1,6 @@
 # Wallet en python
 	
-Esta aplicacion se encuentra funcionando desde la URL:
+La aplicacion se encuentra funcionando desde la URL:
 
 	Mockup de Api: http://142.44.246.66:5000/wallet
 	Api enlazada: http://142.44.246.66:4000/wallet
