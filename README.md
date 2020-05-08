@@ -57,9 +57,9 @@ Para validar que los datos de la transaccion sean correctos se hace el envío de
 	datos = r.get_json() #Respuesta del coordinador
 	respuesta = datos["respuesta"]
 	
-La wallet será ejecutada desde la dirección de host '142.44.246.66' por el puerto 4000, el envío y recepción de datos será realizado en las siguientes rutas:
+La wallet será ejecutada desde la dirección de host '142.44.246.66' por el puerto 5000, el envío y recepción de datos será realizado en las siguientes rutas:
 
-Validación de datos (transacción) y Información del usuario (Saldo):
+Registro de transaccion (Validacion) y Información del usuario (Saldo):
 
 	Transacción:   	http://142.44.246.66:5000/validacion	
 	Saldo:         	http://142.44.246.66:5000/saldo
