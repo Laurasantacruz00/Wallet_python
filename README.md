@@ -1,4 +1,9 @@
 # Wallet en python
+	
+Esta aplicacion se encuentra funcionando desde la URL:
+
+	Api con datos de prueba: http://142.44.246.66:5000/wallet
+	Api enlazada: http://142.44.246.66:4000/wallet
 
 Esta api fue creada en python 3.6 usando los siguientes paquetes y librerias los cuales nos permitieron el funcionamiento correcto de la aplicación
 
