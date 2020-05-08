@@ -4,7 +4,18 @@ La aplicacion se encuentra funcionando desde la URL:
 
 	Mockup de Api: http://142.44.246.66:4000/wallet
 	Api enlazada: http://142.44.246.66:5000/wallet
-
+	
+Para hacer pruebas con el mockup se recomienda el uso de Postman o insomnia en la cual se pude mandar una respuesta en formato json con el metodo post a los siguientes url de la siguiente forma:
+	
+	Enviar saldo: http://142.44.246.66:4000/saldo
+		{
+			"saldo":"el saldo que quiera agregar"
+		}
+	Registro de transaccion: http://142.44.246.66:4000/validacion
+		{
+			"respuesta":"true o false dependiendo de si fueron aceptados o denegados los datos"
+		}
+		
 Esta api fue creada en python 3.6 usando los siguientes paquetes y librerias los cuales nos permitieron el funcionamiento correcto de la aplicación
 
 	from flask import Flask,render_template, request, redirect, url_for,jsonify
@@ -50,5 +61,5 @@ La wallet será ejecutada desde la dirección de host '142.44.246.66' por el pue
 
 Validación de datos (transacción) y Información del usuario (Saldo):
 
-	Transacción:   	http://142.44.246.66:4000/validacion	
-	Saldo:         	http://142.44.246.66:4000/saldo
+	Transacción:   	http://142.44.246.66:5000/validacion	
+	Saldo:         	http://142.44.246.66:5000/saldo
