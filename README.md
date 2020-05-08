@@ -7,11 +7,11 @@ La aplicacion se encuentra funcionando desde la URL:
 	
 Para hacer pruebas con el mockup se recomienda el uso de Postman o insomnia en la cual se pude mandar una respuesta en formato json con el metodo post a los siguientes url de la siguiente forma:
 	
-	Enviar saldo: http://142.44.246.66:4000/saldo
+		Enviar saldo: http://142.44.246.66:4000/saldo
 		{
 			"saldo":"el saldo que quiera agregar"
 		}
-	Registro de transaccion: http://142.44.246.66:4000/validacion
+		Registro de transaccion: http://142.44.246.66:4000/validacion
 		{
 			"respuesta":"true o false dependiendo de si fueron aceptados o denegados los datos"
 		}
