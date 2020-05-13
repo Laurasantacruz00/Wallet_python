@@ -45,7 +45,7 @@ def registro():
 
         
 @app.route("/saldo",methods=["GET","POST"])
-def saldo():#Mostrando saldo al cliente
+def saldo():#Mostrando saldo al cliente http://142.44.246.23:5596/coordinator
     r = requests.post('http://142.44.246.23:5596/coordinator',datos={"origen":"wallet","operacion":"consultarfondos"})#Pidiendo informacion al coordinador
     datos = r.get_json() #Respuesta del coordinador
     saldo = datos["saldo"]
@@ -81,9 +81,7 @@ def transaccion():
         transaccion = {
             "origen":"wallet",
             "operacion":"registrartransaccion",
-            "dir1":str(dir1),
-            "dir2":str(dir2),
-            "dinero":str(dinero)
+            "datos":[str(dir1),str(dir2),dinero]
         }
         archivo = open("Transaccion.py","w")#Creando archivo aparte 
         archivo.write("transaccion = {}" .format(transaccion) )
@@ -93,4 +91,4 @@ def transaccion():
     return render_template('inicio.html', usuario = usuario)
 
 if __name__ == '__main__':
-    app.run(host="142.44.246.66",debug=True,port=4000)#Puerto y host donde se vera la api 
+    app.run(host="142.44.246.66",debug=True,port=5000)#Puerto y host donde se vera la api 
