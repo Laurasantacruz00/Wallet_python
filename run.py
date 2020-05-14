@@ -46,16 +46,16 @@ def registro():
         
 @app.route("/saldo",methods=["GET","POST"])
 def saldo():#Mostrando saldo al cliente http://142.44.246.23:5596/coordinator
-    r = requests.post('http://142.44.246.23:5596/coordinator',datos=jsonify({"origen":"wallet","operacion":"consultarfondos"}))#Pidiendo informacion al coordinador
-    datos = r.get_json() #Respuesta del coordinador
+    c = requests.post('http://142.44.246.23:5596/coordinator',datos=jsonify({"origen":"wallet","operacion":"consultarfondos"}))#Pidiendo informacion al coordinador
+    datos = c.get_json() #Respuesta del coordinador
     saldo = datos["saldo"]
     usuario = {'saldo':saldo}
     return render_template('Saldo.html', usuario = usuario)#Mostrando datos
 
 @app.route("/validacion",methods=["GET","POST"])
 def validacion_transaccion():#Validando informacion con el coordinador
-    r = requests.post('http://142.44.246.23:5596/coordinator',datos={"origen":"wallet","operacion":"registrartransaccion","datos":"dato"})#Pidiendo validacion al coordinador
-    datos = r.json() #Respuesta del coordinador
+    c = requests.post("http://142.44.246.23:5596/coordinator",datos={"origen":"wallet","operacion":"registrartransaccion","datos":"dato"})#Pidiendo validacion al coordinador
+    datos = c.json() #Respuesta del coordinador
     respuesta = datos["respuesta"]
     if respuesta.upper()=="TRUE": #Si es true los datos son correctos la transaccion es exitosa
         usuario = {'transaccion':"Existoso"}
