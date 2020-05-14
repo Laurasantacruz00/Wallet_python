@@ -46,7 +46,7 @@ def registro():
         
 @app.route("/saldo",methods=["GET","POST"])
 def saldo():#Mostrando saldo al cliente http://142.44.246.23:5596/coordinator
-    r = requests.post('http://142.44.246.23:5596/coordinator',datos={"origen":"wallet","operacion":"consultarfondos"})#Pidiendo informacion al coordinador
+    r = requests.post('http://142.44.246.23:5596/coordinator',jsonify({"wallet":transaccion}))#Pidiendo informacion al coordinador
     datos = r.get_json() #Respuesta del coordinador
     saldo = datos["saldo"]
     usuario = {'saldo':saldo}
