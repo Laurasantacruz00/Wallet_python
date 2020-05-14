@@ -64,7 +64,7 @@ def validacion_transaccion():#Validando informacion con el coordinador
         return redirect(url_for('saldo'))#Redireccionando a otra ruta
     else:
         usuario = {'transaccion':"Denegado"}#Si es false los datos son incorrectos la transaccion ha sido denegada
-        return render_template('inicio.html', usuario = usuario)
+        return render_template('inicio.html', usuatrio = usuario)
         return redirect(url_for('transaccion'))#Redireccionando a otra ruta
 
 @app.route("/transaccion", methods=["GET","POST"])#Realizando transaccion
