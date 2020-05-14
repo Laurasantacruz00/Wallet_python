@@ -1,5 +1,6 @@
 from flask import Flask,render_template, request, redirect, url_for,jsonify
 import hashlib,datetime,os,json, requests
+import requests
 from Transaccion import transaccion
 
 #Creación de la aplicación 
