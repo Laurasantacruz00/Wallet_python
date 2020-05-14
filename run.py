@@ -54,7 +54,7 @@ def saldo():#Mostrando saldo al cliente http://142.44.246.23:5596/coordinator
 
 @app.route("/validacion",methods=["GET","POST"])
 def validacion_transaccion():#Validando informacion con el coordinador
-    r = requests.post('http://142.44.246.23:5596/coordinator',transaccion = {"origen":"wallet","operacion":"registrartransaccion","datos":["prueba","prueba","prueba"]})#Pidiendo validacion al coordinador
+    r = requests.post('http://142.44.246.23:5596/coordinator',transaccion = {"origen":"wallet","operacion":"registrartransaccion","datos":"prueba"})#Pidiendo validacion al coordinador
     datos = r.get_json() #Respuesta del coordinador
     respuesta = datos["respuesta"]
     if respuesta.upper()=="TRUE": #Si es true los datos son correctos la transaccion es exitosa
@@ -81,7 +81,7 @@ def transaccion():
         transaccion = {
             "origen":"wallet",
             "operacion":"registrartransaccion",
-            "datos":[str(dir1),str(dir2),dinero]
+            "datos":str(dir1)+","+str(dir2)+","+dinero
         }
         archivo = open("Transaccion.py","w")#Creando archivo aparte 
         archivo.write("transaccion = {}" .format(transaccion) )
