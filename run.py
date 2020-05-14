@@ -91,4 +91,4 @@ def transaccion():
     return render_template('inicio.html', usuario = usuario)
 
 if __name__ == '__main__':
-    app.run(host="142.44.246.66",debug=True,port=5000)#Puerto y host donde se vera la api 
+    app.run(host="142.44.246.66",debug=True,port=5000)#Puerto y host donde se vera la api
