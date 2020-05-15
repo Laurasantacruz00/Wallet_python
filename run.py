@@ -40,20 +40,6 @@ def registro():
         return redirect(url_for('transaccion'))
     return render_template("formulario.html")
 
-        
-@app.route("/saldo",methods=["GET","POST"])
-def saldo():#Mostrando saldo al cliente
-    usuario = {'saldo':""}
-    if requests.method == 'POST':
-        saldo = request.form['r']
-        if saldo == "true":
-            r = requests.post('http://localhost:5000/tests/endpoint',datos={"origen":"wallet","operacion":"consultarfondos"})#Pidiendo informacion al coordinador
-            saldo = r.json() #Respuesta del coordinador
-            saldo = datos["saldo"]
-            usuario = {'saldo':saldo}
-            return render_template('Saldo.html', usuario = usuario)
-    return render_template('Saldo.html', usuario = usuario)#Mostrando datos
-
 @app.route('/transaccion', methods=['GET','POST'])#Realizando transaccion
 def transaccion():
     with open('wallet.json') as contenido: #Leyendo el json creado anteriormente para ver la informacion del cliente
