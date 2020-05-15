@@ -1,10 +1,10 @@
 from flask import Flask,render_template, request, redirect, url_for,jsonify
-import hashlib,datetime,os,json, requests
+import hashlib,datetime,os,json
+import requests
 from Transaccion import transaccion
 
 #Creación de la aplicación 
 app = Flask(__name__)
-
 def hash_read(datos):
     return hashlib.sha256(datos.encode('utf-8')).hexdigest() #Funcion que genera el hash
 
@@ -33,9 +33,6 @@ def registro():
         wallet_1 = {} #Creando un diccionario con la informacion del cliente 
         wallet_1['datos'] = []
         wallet_1['datos'].append({
-            "palabras":str(palabras),
-            "email":str(correo),
-            "hora_actual":str(hora_actual),
             "hash_origen":str(hash_origen)
         })
         with open('wallet.json', 'w') as file:#Creando archivo json con la informacion del cliente
@@ -46,51 +43,62 @@ def registro():
         
 @app.route("/saldo",methods=["GET","POST"])
 def saldo():#Mostrando saldo al cliente
-    r = requests.post('http://142.44.246.23:5596/coordinator',datos={"origen":"wallet","operacion":"consultarfondos"})#Pidiendo informacion al coordinador
-    datos = r.get_json() #Respuesta del coordinador
-    saldo = datos["saldo"]
-    usuario = {'saldo':saldo}
+    usuario = {'saldo':""}
+    if requests.method == 'POST':
+        saldo = request.form['r']
+        if saldo == "true":
+            r = requests.post('http://localhost:5000/tests/endpoint',datos={"origen":"wallet","operacion":"consultarfondos"})#Pidiendo informacion al coordinador
+            saldo = r.json() #Respuesta del coordinador
+            saldo = datos["saldo"]
+            usuario = {'saldo':saldo}
+            return render_template('Saldo.html', usuario = usuario)
     return render_template('Saldo.html', usuario = usuario)#Mostrando datos
 
-@app.route("/validacion",methods=["GET","POST"])
-def validacion_transaccion():#Validando informacion con el coordinador
-    r = requests.post('http://142.44.246.23:5596/coordinator',datos=jsonify({"wallet":transaccion}))#Pidiendo validacion al coordinador
-    datos = r.get_json() #Respuesta del coordinador
-    respuesta = datos["respuesta"]
-    if respuesta.upper()=="TRUE": #Si es true los datos son correctos la transaccion es exitosa
-        usuario = {'transaccion':"Existoso"}
-        return render_template('inicio.html', usuario = usuario)
-        return redirect(url_for('saldo'))#Redireccionando a otra ruta
-    else:
-        usuario = {'transaccion':"Denegado"}#Si es false los datos son incorrectos la transaccion ha sido denegada
-        return render_template('inicio.html', usuario = usuario)
-        return redirect(url_for('transaccion'))#Redireccionando a otra ruta
-
-@app.route("/transaccion", methods=["GET","POST"])#Realizando transaccion
+@app.route('/transaccion', methods=['GET','POST'])#Realizando transaccion
 def transaccion():
     with open('wallet.json') as contenido: #Leyendo el json creado anteriormente para ver la informacion del cliente
         datos_wallet = json.load(contenido)
         for dato in datos_wallet['datos']:
             hash_origen = dato['hash_origen']
+        usuario = {'name':hash_origen,'saldo':"",'transaccion':""}
     if request.method == 'POST':
         #Trayendo datos del formulario
-        dir1 = hash_origen 
+        dir1 = hash_origen
         dir2 = request.form['dir2']
         dinero = request.form['dinero']
+        datos = dir1+","+dir2+","+dinero
         #Creando diccionario con la informacion de la transaccion
         transaccion = {
             "origen":"wallet",
             "operacion":"registrartransaccion",
-            "dir1":str(dir1),
-            "dir2":str(dir2),
-            "dinero":str(dinero)
+            "datos": datos
         }
         archivo = open("Transaccion.py","w")#Creando archivo aparte 
-        archivo.write("transaccion = {}" .format(transaccion) )
+        archivo.write("transaccion = {}".format(transaccion) )
         archivo.close() 
-        return redirect(url_for('validacion_transaccion'))#Redireccionando a otra ruta
-    usuario = {'name':hash_origen}#Trayendo hash del cliente
-    return render_template('inicio.html', usuario = usuario)
+        datos = {'wallet':transaccion}
+        r = requests.post('http://localhost:5000/tests/endpoint', json=datos)
+        re = r.json()
+        respuesta = re['mensaje']
+        print(respuesta)
+        #return jsonify(respuesta)
+        if respuesta =="datos enviados al register": #Si es true los datos son correctos la transaccion es exitosa
+            r = requests.post('http://localhost:5000/tests/endpoint', json={"origen":"wallet","operacion":"consultarfondos"})
+            re = r.json()
+            respuesta = re['mensaje']
+            print(respuesta)
+            usuario = {'name':hash_origen,'saldo':"",'transaccion':"Transaccion exitosa"}
+            return render_template('inicio.html',usuario=usuario)
+        else:
+            #Si es false los datos son incorrectos la+ transaccion ha sido denegada
+            r = requests.post('http://localhost:5000/tests/endpoint', json={"origen":"wallet","operacion":"consultarfondos"})
+            re = r.json()
+            respuesta = re['mensaje']
+            print(respuesta)
+            usuario = {'name':hash_origen,'saldo':"",'transaccion':"Transaccion denegada"}
+            return render_template('inicio.html',usuario=usuario)
+        #return redirect(url_for('validacion_transaccion')) 
+    return render_template('inicio.html',usuario=usuario)
 
 if __name__ == '__main__':
-    app.run(debug=True,port=4000)#Puerto y host donde se vera la api 
+    app.run(host="142.44.246.66",debug=True,port=4000)#Puerto y host donde se vera la api 

@@ -23,9 +23,8 @@
     <hr>
     <br>
     <div class="text-center">
-        <h4 class="lead">¿Quieres ver tu saldo? </h4>
+        <h4 class="lead">Tu saldo es: {{ usuario.saldo }} </h4>
         <br>
-        <button onclick="window.location.href='/saldo'" class="btn btn-primary">Ver Saldo</button>
     </div>
     <br>
     <p class="lead">Para hacer alguna trasacción ingrese los siguientes datos:</p>
@@ -47,7 +46,7 @@
             <small id="dinero" class="form-text text-muted">Digite el monto.</small>
         </div>
         <br>
-        <p class="lead">Su transaccion fue: {{ usuario.transaccion }}</p>
+        <p class="lead"> {{ usuario.transaccion }}</p>
         <br>
         <button type="submit" class="btn btn-primary" id="send-signup" name="signup" value="Enviar">Enviar</button>
     </form>
