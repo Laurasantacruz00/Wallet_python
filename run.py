@@ -63,13 +63,13 @@ def transaccion():
         archivo.write("transaccion = {}".format(transaccion) )
         archivo.close() 
         datos = {'wallet':transaccion}
-        r = requests.post('http://localhost:5000/tests/endpoint', json=datos)
+        r = requests.post('http://192.168.0.8:5000/tests/endpoint', json=datos)
         re = r.json()
         respuesta = re['mensaje']
         print(respuesta)
         #return jsonify(respuesta)
         if respuesta =="datos enviados al register": #Si es true los datos son correctos la transaccion es exitosa
-            r = requests.post('http://localhost:5000/tests/endpoint', json={"origen":"wallet","operacion":"consultarfondos"})
+            r = requests.post('http://192.168.0.8:5000/tests/endpoint', json={"origen":"wallet","operacion":"consultarfondos"})
             re = r.json()
             respuesta = re['mensaje']
             print(respuesta)
@@ -77,7 +77,7 @@ def transaccion():
             return render_template('inicio.html',usuario=usuario)
         else:
             #Si es false los datos son incorrectos la+ transaccion ha sido denegada
-            r = requests.post('http://localhost:5000/tests/endpoint', json={"origen":"wallet","operacion":"consultarfondos"})
+            r = requests.post('http://192.168.0.8:5000/tests/endpoint', json={"origen":"wallet","operacion":"consultarfondos"})
             re = r.json()
             respuesta = re['mensaje']
             print(respuesta)
