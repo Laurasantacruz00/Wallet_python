@@ -61,6 +61,4 @@ La wallet será ejecutada desde la dirección de host '142.44.246.66' por el pue
 
 Registro de transacción (Validación) y Información del usuario (Saldo):
 
-
-	Transacción:   	http://142.44.246.66:5000/validacion	
-	Saldo:         	http://142.44.246.66:5000/saldo
+	http://142.44.246.66:5000/transaccion	
